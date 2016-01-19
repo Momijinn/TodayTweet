@@ -8,6 +8,14 @@ import sys
 import linecache
 import re
 import glob
+import os
+import shutil
+
+#持ってきたファイルを保管するディレクトリ作成
+day_dir = 'day_data'
+if not(glob.glob(day_dir)):
+    os.mkdir(day_dir)
+    pass
 
 argv = sys.argv
 argc = len(argv)
@@ -20,9 +28,14 @@ else:
     pass
 
 #一時間ごとにURLを参照しては失礼なので、同じファイルがあったら参照しない
-if not(glob.glob(argv)):
+if not(glob.glob(day_dir + '/' + argv)):
     today.main(argv)
+    shutil.move(argv, day_dir)
     pass
+
+#ファイルディレクトリの書き換え
+tweet_day = argv
+argv = day_dir + '/' + argv
 
 #乱数の生成
 f = open(argv, 'rb')
@@ -52,7 +65,7 @@ for i in reversed(range(ran)):
         pass
     pass
 
-now_tweet = argv + 'の' + topic_line + line
+now_tweet = tweet_day + 'の' + topic_line + line
 print (now_tweet)
 
 tweet.main(now_tweet)
