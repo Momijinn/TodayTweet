@@ -47,11 +47,12 @@ for i in reversed(range(ran)):
     topic_line = linecache.getline(argv,i)
     if re.search(r'== +\S+ ==', topic_line):
         topic_line = topic_line.replace('==','')
+        topic_line = topic_line.replace(' ','')
         break
         pass
     pass
 
-now_tweet = argv + 'の' + topic_line + '\n' + line
+now_tweet = argv + 'の' + topic_line + line
 print (now_tweet)
 
 tweet.main(now_tweet)
